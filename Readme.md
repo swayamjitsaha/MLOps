@@ -17,3 +17,6 @@ Over the course of the lab, I gained practical experience with:
 Thanks to the Splunk team for such an engaging and insightful session!
 
 #Splunk #DataAnalytics #CyberSecurity #DevOps #ITOperations #BusinessIntelligence #Splunk4Rookies #Dashboarding #SPL #LearningByDoing
+
+![Buttercup Enterprises_2025-05-01 at 09 47 43-0500_Splunk](https://github.com/user-attachments/assets/82c4876f-1236-4ff2-967a-cf7a0753b47e)
+
