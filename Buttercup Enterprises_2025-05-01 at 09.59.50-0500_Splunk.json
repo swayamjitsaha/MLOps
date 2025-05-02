@@ -1,0 +1,310 @@
+{
+  "dataSources": {
+    "ds_b6OfXU3l": {
+      "type": "ds.search",
+      "options": {
+        "query": "index=main sourcetype=access_combined\r\n| iplocation clientip | geostats count by City",
+        "queryParameters": {
+          "earliest": "-24h@h",
+          "latest": "now"
+        }
+      },
+      "name": "Security and Fraud - Customer Locations search"
+    },
+    "ds_eQfY3auW": {
+      "type": "ds.search",
+      "options": {
+        "query": "index=main sourcetype=access_combined action=purchase status>=400\r\n| lookup product_codes.csv product_id\r\n| timechart sum(product_price)",
+        "queryParameters": {
+          "earliest": "-24h@h",
+          "latest": "now"
+        }
+      },
+      "name": "Business Analytics - Lost Revenue search"
+    },
+    "ds_iUWFanCm": {
+      "type": "ds.search",
+      "options": {
+        "query": "index=main sourcetype=access_combined status>=400\r\n| timechart count by useragent limit=5 useother=f",
+        "queryParameters": {
+          "earliest": "-24h@h",
+          "latest": "now"
+        }
+      },
+      "name": "DevOps - Web Browsers With Most Failures search"
+    },
+    "ds_ZwuKsQyz": {
+      "type": "ds.search",
+      "options": {
+        "query": "index=main sourcetype=access_combined | top limit=20 platform showperc=f",
+        "queryParameters": {
+          "earliest": "-24h@h",
+          "latest": "now"
+        }
+      },
+      "name": "DevOps - Most Popular Operating Systems search"
+    },
+    "ds_wVvsbL87": {
+      "type": "ds.search",
+      "options": {
+        "query": "index=main sourcetype=access_combined| timechart count by status limit=10",
+        "queryParameters": {
+          "earliest": "-24h@h",
+          "latest": "now"
+        }
+      },
+      "name": "IT Ops - Web Server Status Codes Over Time - Column chart search"
+    }
+  },
+  "visualizations": {
+    "viz_22jdAbKZ": {
+      "type": "splunk.map",
+      "options": {
+        "center": [
+          27.45636083118046,
+          -9.840749064445845
+        ],
+        "zoom": 1.1662012339578274,
+        "showBaseLayer": true,
+        "layers": [
+          {
+            "type": "bubble",
+            "latitude": "> primary | seriesByName('latitude')",
+            "longitude": "> primary | seriesByName('longitude')",
+            "bubbleSize": "> primary | frameWithoutSeriesNames('_geo_bounds_east', '_geo_bounds_west', '_geo_bounds_north', '_geo_bounds_south', 'latitude', 'longitude') | frameBySeriesTypes('number')",
+            "seriesColors": [
+              "#7b56db",
+              "#cb2196",
+              "#008c80",
+              "#9d6300",
+              "#f6540b",
+              "#ff969e",
+              "#99b100",
+              "#f4b649",
+              "#ae8cff",
+              "#8cbcff",
+              "#813193",
+              "#0051b5",
+              "#009ceb",
+              "#00cdaf",
+              "#00490a",
+              "#dd9900",
+              "#465d00",
+              "#ff677b",
+              "#ff6ace",
+              "#00689d"
+            ]
+          }
+        ],
+        "backgroundColor": "transparent"
+      },
+      "dataSources": {
+        "primary": "ds_b6OfXU3l"
+      },
+      "title": "Security and Fraud - Customer Locations"
+    },
+    "viz_Dh8mKOdj": {
+      "type": "splunk.singlevalue",
+      "options": {
+        "numberPrecision": 2,
+        "sparklineDisplay": "below",
+        "trendDisplay": "absolute",
+        "unit": "$",
+        "unitPosition": "before",
+        "shouldUseThousandSeparators": true,
+        "trendColor": "> trendValue | rangeValue(convertedColorRange)",
+        "backgroundColor": "transparent",
+        "majorColor": "#ffffff"
+      },
+      "context": {
+        "convertedColorRange": [
+          {
+            "to": 0,
+            "value": "#1C6B2D"
+          },
+          {
+            "from": 0,
+            "value": "#9E2520"
+          }
+        ]
+      },
+      "dataSources": {
+        "primary": "ds_eQfY3auW"
+      },
+      "title": "Business Analytics - Lost Revenue"
+    },
+    "viz_MajjOhfT": {
+      "type": "splunk.area",
+      "options": {
+        "yAxisAbbreviation": "auto",
+        "y2AxisAbbreviation": "auto",
+        "showRoundedY2AxisLabels": false,
+        "legendTruncation": "ellipsisMiddle",
+        "showY2MajorGridLines": true,
+        "xAxisLabelRotation": 0,
+        "xAxisTitleVisibility": "show",
+        "yAxisTitleVisibility": "show",
+        "y2AxisTitleVisibility": "show",
+        "yAxisScale": "linear",
+        "showOverlayY2Axis": false,
+        "y2AxisScale": "inherit",
+        "nullValueDisplay": "gaps",
+        "dataValuesDisplay": "off",
+        "stackMode": "auto",
+        "showSplitSeries": false,
+        "showIndependentYRanges": false,
+        "legendMode": "standard",
+        "legendDisplay": "right",
+        "backgroundColor": "transparent"
+      },
+      "dataSources": {
+        "primary": "ds_iUWFanCm"
+      },
+      "title": "DevOps - Web Browsers With Most Failures"
+    },
+    "viz_UR6300XJ": {
+      "type": "splunk.bar",
+      "options": {
+        "yAxisAbbreviation": "auto",
+        "y2AxisAbbreviation": "auto",
+        "showRoundedY2AxisLabels": false,
+        "legendTruncation": "ellipsisMiddle",
+        "showY2MajorGridLines": true,
+        "xAxisTitleVisibility": "show",
+        "yAxisTitleVisibility": "show",
+        "y2AxisTitleVisibility": "show",
+        "yAxisScale": "linear",
+        "dataValuesDisplay": "off",
+        "stackMode": "auto",
+        "showSplitSeries": false,
+        "showIndependentYRanges": false,
+        "legendDisplay": "right",
+        "backgroundColor": "transparent"
+      },
+      "dataSources": {
+        "primary": "ds_ZwuKsQyz"
+      },
+      "title": "DevOps - Most Popular Operating Systems"
+    },
+    "viz_u1pugeSP": {
+      "type": "splunk.column",
+      "options": {
+        "yAxisAbbreviation": "auto",
+        "y2AxisAbbreviation": "auto",
+        "showRoundedY2AxisLabels": false,
+        "legendTruncation": "ellipsisMiddle",
+        "showY2MajorGridLines": true,
+        "xAxisLabelRotation": 0,
+        "xAxisTitleVisibility": "show",
+        "yAxisTitleVisibility": "show",
+        "y2AxisTitleVisibility": "show",
+        "yAxisScale": "linear",
+        "showOverlayY2Axis": false,
+        "y2AxisScale": "inherit",
+        "dataValuesDisplay": "off",
+        "stackMode": "stacked",
+        "showSplitSeries": false,
+        "showIndependentYRanges": false,
+        "legendDisplay": "right",
+        "backgroundColor": "transparent"
+      },
+      "dataSources": {
+        "primary": "ds_wVvsbL87"
+      },
+      "title": "IT Ops - Web Server Status Codes Over Time"
+    }
+  },
+  "inputs": {
+    "input_global_trp": {
+      "type": "input.timerange",
+      "options": {
+        "token": "global_time",
+        "defaultValue": "-24h@h,now"
+      },
+      "title": "Global Time Range"
+    }
+  },
+  "layout": {
+    "type": "absolute",
+    "options": {
+      "width": 1440,
+      "height": 1480,
+      "display": "auto",
+      "backgroundImage": {
+        "sizeType": "contain",
+        "x": 0,
+        "y": 0,
+        "src": "https://splk.it/ButtercupBackground"
+      }
+    },
+    "structure": [
+      {
+        "item": "viz_u1pugeSP",
+        "type": "block",
+        "position": {
+          "x": 20,
+          "y": 210,
+          "w": 1390,
+          "h": 300
+        }
+      },
+      {
+        "item": "viz_UR6300XJ",
+        "type": "block",
+        "position": {
+          "x": 20,
+          "y": 540,
+          "w": 630,
+          "h": 300
+        }
+      },
+      {
+        "item": "viz_MajjOhfT",
+        "type": "block",
+        "position": {
+          "x": 650,
+          "y": 530,
+          "w": 760,
+          "h": 310
+        }
+      },
+      {
+        "item": "viz_Dh8mKOdj",
+        "type": "block",
+        "position": {
+          "x": 10,
+          "y": 60,
+          "w": 1410,
+          "h": 130
+        }
+      },
+      {
+        "item": "viz_22jdAbKZ",
+        "type": "block",
+        "position": {
+          "x": 20,
+          "y": 860,
+          "w": 1400,
+          "h": 530
+        }
+      }
+    ],
+    "globalInputs": [
+      "input_global_trp"
+    ]
+  },
+  "title": "Buttercup Enterprises",
+  "description": "",
+  "defaults": {
+    "dataSources": {
+      "ds.search": {
+        "options": {
+          "queryParameters": {
+            "latest": "$global_time.latest$",
+            "earliest": "$global_time.earliest$"
+          }
+        }
+      }
+    }
+  }
+}
